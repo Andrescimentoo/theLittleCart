@@ -1,60 +1,49 @@
-import Sequelize from "sequelize";
 import { DataTypes } from "sequelize";
+import { dataBase } from "../database/config";
 
+const ShiftSchedule = dataBase.define("ShiftSchedule", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
 
+  dayOfWeek: {
+    type: DataTypes.STRING(50),
+    allowNull: false,
+  },
 
-    const ShiftSchedule = Sequelize.define('ShiftSchedule', {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      volunteerId_1: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'VoluntersToCart', // Nome da tabela relacionada
-          key: 'id',
-        },
-      },
-      volunteerId_2: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'VoluntersToCart', // Nome da tabela relacionada
-          key: 'id',
-        },
-      },
-      day_of_week: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-      },
-      start_time: {
-        type: DataTypes.TIME,
-        allowNull: false,
-      },
-      end_time: {
-        type: DataTypes.TIME,
-        allowNull: false,
-      },
-    }, {
-      tableName: 'shiftSchedule',
-      timestamps: false, // Desabilita os campos 'createdAt' e 'updatedAt'
-    });
-  
-    // Relacionamentos
-    ShiftSchedule.associate = (models) => {
-      ShiftSchedule.belongsTo(models.VoluntersToCart, {
-        foreignKey: 'volunteerId_1',
-        as: 'volunteer_1',
-      });
-      ShiftSchedule.belongsTo(models.VoluntersToCart, {
-        foreignKey: 'volunteerId_2',
-        as: 'volunteer_2',
-      });
-    };
-  
-    return ShiftSchedule;
+  startTime: {
+    type: DataTypes.TIME,
+    allowNull: false,
+  },
 
-    export{ShiftSchedule}
-  
+  endTime: {
+    type: DataTypes.TIME,
+    allowNull: false,
+  },
+
+  shift: {
+    type: DataTypes.STRING(20), 
+    allowNull: false,
+  },
+
+  fixedDay: {
+    type: DataTypes.STRING(10), 
+    allowNull: true,
+  },
+
+  volunteer_1: {
+    type: DataTypes.STRING(200), 
+    allowNull: true,
+  },
+
+  volunteer_2: {
+    type: DataTypes.STRING(200), 
+    allowNull: true,
+  },
+});
+
+export {ShiftSchedule}; 
+
+    
